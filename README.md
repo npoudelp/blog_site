@@ -1,2 +1,3 @@
 # blog_site
-This holds the api for blog post
+
+A blog api that can handel CRUD operation from front-end.
