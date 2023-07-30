@@ -7,4 +7,5 @@ urlpatterns = [
     path('get_by_id/<int:id>', apis.get_by_id, name='get_by_id'),
     path('post_blog/', apis.post_blog, name='post_blog'),
     path('edit_blog/<int:id>', apis.edit_blog, name='edit_blog'),
+    path('delete_blog/<int:id>', apis.delete_blog, name='delete_blog'),
 ]
