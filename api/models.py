@@ -9,6 +9,6 @@ class Tags(models.Model):
 class Posts(models.Model):
     title = models.CharField(max_length=255, null=False, blank=False)
     content = models.TextField()
-    date = models.DateField(default=timezone.now())
+    date = models.DateTimeField(default=timezone.now())
     author = models.CharField(max_length=25)
-    tag = models.ForeignKey(Tags, on_delete=models.PROTECT, null=True)
+    tag = models.ForeignKey(Tags, on_delete=models.PROTECT, null=True, blank=False)
