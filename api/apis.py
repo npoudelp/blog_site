@@ -3,6 +3,8 @@ from rest_framework.decorators import api_view
 from django.http import Http404
 from api.serializer import Post_form
 from api.models import Posts
+from django.contrib.auth.decorators import login_required
+
 
 @api_view(['GET'])
 def get_all(request):
@@ -12,6 +14,7 @@ def get_all(request):
         return Response(serializer.data, status=200)
     else:
         return Response("Invalid request type", status=405)
+
 
 @api_view(['GET'])
 def get_by_id(request, id):
@@ -38,6 +41,7 @@ def post_blog(request):
     else:
         return Response("Invalid request type", status=405)
 
+
 @api_view(["PUT"])
 def edit_blog(request, id):
     if request.method == "PUT":
@@ -49,7 +53,22 @@ def edit_blog(request, id):
                 return Response(serilaizer.data, status=201)
             else:
                 return Response(serilaizer.data, status=405)
-        except Posts.DoesNotExist():
+        except Posts.DoesNotExist:
             raise Http404
     else:
-        return Response("Invalid request type", status=400)
+        return Response("Invalid request type", status=405)
+    
+
+@api_view(["DELETE"])
+def delete_blog(request, id):
+    if request.method == "DELETE":
+        try:
+            post = Posts.objects.get(id=id)
+            if post.delete():
+                return Response("Blog deleted", status=200)
+            else:
+                return Response("Unable to delete", status=500)
+        except Posts.DoesNotExist:
+            raise Http404
+    else:
+        return Response("Invalid request type", status=405)
